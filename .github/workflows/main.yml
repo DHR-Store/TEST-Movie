@@ -12,14 +12,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Java
+      - name: Setup-Java
         uses: actions/setup-java@v3.12.0
         with:
           distribution: 'oracle'
           java-version: '17'
 
-- name: Clone Repository
-  run: git clone https://x-access-token:${{ secrets.SECRET_KEY }}@github.com/punisher-303/DoodleMoviesApp.git
+      - name: Clone Repository
+        run: git clone https://x-access-token:${{ secrets.SECRET_KEY }}@github.com/punisher-303/DoodleMoviesApp.git
+
       - name: Install Dependencies
         run: |
           cd DoodleMoviesApp
@@ -37,7 +38,7 @@ jobs:
         run: |
           echo keyPassword=${{ secrets.KEY_PASSWORD }} > ./DoodleMoviesApp/android/key.properties
           echo storePassword=${{ secrets.STORE_PASSWORD }} >> ./DoodleMoviesApp/android/key.properties
-          echo keyAlias=${{ secrets.KEY_ALIAS }} >> ./DoodleMoviesApp/android/key.properties
+          echo keyAlias=${{ secrets.KEY_ALIAS }} >> ./DoodleMoviesApp/android/key.properties  
 
       - name: Build App file
         run: cd DoodleMoviesApp/android && ./gradlew assembleRelease
@@ -68,7 +69,7 @@ jobs:
             DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.1.apk
             DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.1.apk
           tag: v9.6.1
-          token: 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
+          token: ${{ secrets.SECRET_KEY }}
           prerelease: true
           allowUpdates: true
           omitBody: true
